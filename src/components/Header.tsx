@@ -3,7 +3,7 @@ import { FiUser } from "react-icons/fi";
 
 export function Header() {
   return (
-    <Flex bg="white">
+    <Flex bg="white" boxShadow='sm'>
       <Flex
         maxW="1080px"
         mx="auto"
