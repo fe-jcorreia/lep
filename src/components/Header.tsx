@@ -3,7 +3,7 @@ import { FiUser } from "react-icons/fi";
 
 export function Header() {
   return (
-    <Flex bg="white" boxShadow='sm'>
+    <Flex bg="white" boxShadow="sm" pos="sticky" top="0" as="header" zIndex="3">
       <Flex
         maxW="1080px"
         mx="auto"
@@ -12,7 +12,7 @@ export function Header() {
         align="center"
         justify="space-between"
       >
-        <Link href="/" align="center" w="10rem">
+        <Link href="/" align="center" w="8rem">
           <Image src="/img/logo.png" h="auto" w="100%" alt="logo" />
         </Link>
         <HStack align="center" spacing="2rem">
