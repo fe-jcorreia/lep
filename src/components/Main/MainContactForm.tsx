@@ -1,5 +1,5 @@
 import { Flex, Heading, Text } from "@chakra-ui/react";
-import { ContactForm } from "./ContactForm";
+import { ContactForm } from "../Form/ContactForm";
 
 export function MainContactForm() {
   return (
@@ -9,16 +9,16 @@ export function MainContactForm() {
       align="center"
       justify="center"
       mt='4rem'
-      pb="4rem"
+      py="4rem"
       flexDir="column"
     >
       <Flex
         maxW="1080px"
         mx="auto"
-        w="60%"
         align="center"
         direction="column"
-        py="4rem"
+        pt="4rem"
+        pb='2rem'
         borderTop="1px"
         textAlign="center"
       >

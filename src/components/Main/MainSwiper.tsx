@@ -61,7 +61,7 @@ for (let i = 0; i < projects.length; i += 1) {
 
 export function MainSwiper() {
   return (
-    <Flex maxWidth="full" height="300px" mx="auto">
+    <Flex maxWidth='full' height="300px" mx="auto">
       <Swiper
         id="main"
         navigation={{ nextEl: null, prevEl: null }}
