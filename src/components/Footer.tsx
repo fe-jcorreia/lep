@@ -13,7 +13,13 @@ import { FaInstagram, FaFacebookSquare, FaLinkedin } from "react-icons/fa";
 
 export function Footer() {
   return (
-    <Flex bg="blue.900" as="footer">
+    <Flex
+      bg="blue.900"
+      as="footer"
+      flexDir="column"
+      align="center"
+      justify="center"
+    >
       <Flex
         maxW="1080px"
         mx="auto"
@@ -25,7 +31,7 @@ export function Footer() {
       >
         <Flex h="100%" color="white">
           <HStack spacing="5rem">
-            <Box w="7%" h="100%">
+            <Box w="4%" h="100%">
               <Image
                 src="/img/icon-bluebg.png"
                 w="100%"
@@ -84,6 +90,10 @@ export function Footer() {
           </HStack>
         </Flex>
       </Flex>
+      <Text color="white" mb='2rem'>
+        Liga de Empreendedorismo da POLI | Todos os direitos reservados |
+        Desenvolvido por LEPOLI-USP
+      </Text>
     </Flex>
   );
 }
