@@ -4,6 +4,7 @@ import {
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
+import { forwardRef, ForwardRefRenderFunction } from "react";
 import { IconType } from "react-icons";
 
 interface InputProps {
@@ -12,7 +13,10 @@ interface InputProps {
   placeholder: string;
 }
 
-export function Input({ type, icon, placeholder }: InputProps) {
+const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
+  { type, icon, placeholder, ...rest },
+  ref
+) => {
   return (
     <InputGroup>
       <InputLeftElement
@@ -24,7 +28,11 @@ export function Input({ type, icon, placeholder }: InputProps) {
         placeholder={placeholder}
         _hover={{ bgColor: "none" }}
         borderColor="gray.400"
+        ref={ref}
+        {...rest}
       />
     </InputGroup>
   );
-}
+};
+
+export const Input = forwardRef(InputBase);
