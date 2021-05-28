@@ -1,4 +1,4 @@
-import { Flex, Heading, Image, Link, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, Link, Skeleton, Text } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 

@@ -20,7 +20,7 @@ export function Header() {
           <Link href="/time">Nosso time</Link>
           <Link href="/contato">Contato</Link>
 
-          <Link href="/login" display="flex" pl="2rem" align="center">
+          <Link href="/login" display="flex" ml="2rem" align="center">
             <Icon as={FiUser} mr="0.5rem" fontSize="1.5rem" />
             Login
           </Link>

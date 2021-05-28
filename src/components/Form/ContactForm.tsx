@@ -1,7 +1,18 @@
-import { Button, Checkbox, Textarea, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormErrorMessage,
+  Textarea,
+  useToast,
+  VStack,
+} from "@chakra-ui/react";
 import { FiPhone, FiMail, FiUser } from "react-icons/fi";
 import { Input } from "./Input";
 import { SubmitHandler, useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect } from "react";
 
 interface SendMessageFormData {
   name: string;
@@ -13,16 +24,36 @@ interface SendMessageFormData {
   message: string;
 }
 
+const signInForSchema = yup.object().shape({
+  name: yup.string().required("Nome obrigatório").trim(),
+  email: yup
+    .string()
+    .required("Email obrigatório")
+    .email("Precisa ser um email válido")
+    .trim(),
+  tel: yup.string().trim(),
+  message: yup.string().required("Mensagem obrigatória").trim(),
+});
+
 export function ContactForm() {
-  const { register, handleSubmit, formState } = useForm();
+  const toast = useToast();
+  const { register, handleSubmit, reset, formState } = useForm({
+    resolver: yupResolver(signInForSchema),
+  });
   const errors = formState.errors;
 
   const handleSendMessage: SubmitHandler<SendMessageFormData> = async (
-    values,
-    event
+    values
   ) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(values);
+    toast({
+      title: "Mensagem enviada",
+      description: "Retornaremos assim que possível",
+      status: "success",
+      position: "top-right",
+      duration: 5000,
+      isClosable: true,
+    });
+    reset();
   };
 
   return (
@@ -41,18 +72,21 @@ export function ContactForm() {
         type="name"
         placeholder="Nome"
         icon={FiUser}
+        error={errors.name}
         {...register("name")}
       />
       <Input
         type="email"
         placeholder="Email"
         icon={FiMail}
+        error={errors.email}
         {...register("email")}
       />
       <Input
         type="tel"
         placeholder="Celular"
         icon={FiPhone}
+        error={errors.tel}
         {...register("tel")}
       />
 
@@ -76,14 +110,19 @@ export function ContactForm() {
         </Checkbox>
       </VStack>
 
-      <Textarea
-        placeholder="Digite sua mensagem"
-        _hover={{ bgColor: "none" }}
-        borderColor="gray.400"
-        resize="none"
-        h="12rem"
-        {...register("message")}
-      />
+      <FormControl isInvalid={errors.message}>
+        <Textarea
+          placeholder="Digite sua mensagem"
+          _hover={{ bgColor: "none" }}
+          borderColor="gray.400"
+          resize="none"
+          h="12rem"
+          {...register("message")}
+        />
+        {!!errors.message && (
+          <FormErrorMessage>{errors.message.message}</FormErrorMessage>
+        )}
+      </FormControl>
       <Button
         w="30%"
         type="submit"
