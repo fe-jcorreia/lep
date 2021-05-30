@@ -5,15 +5,42 @@ import { MainProjects } from "../components/Main/MainProjects";
 import { MainSponsors } from "../components/Main/MainSponsors";
 import { Flex } from "@chakra-ui/react";
 import { MainContactForm } from "../components/Main/MainContactForm";
+import { GetStaticProps } from "next";
+import { getPrismicClient } from "../services/prismic";
+import Prismic from "@prismicio/client";
 
-export default function Home() {
+interface Slide {
+  slide: { url: string };
+  slidetitle: { text: string }[];
+  slidedescription: { text: string }[];
+  slidekey: string;
+}
+
+interface Sponsor {
+  sponsor: { url: string };
+  sponsorkey: string;
+}
+
+interface SlidesFormatted {
+  image: string;
+  title: string;
+  description: string;
+  key: string;
+}
+
+interface HomeProps {
+  slides: SlidesFormatted[];
+  sponsors: { sponsorLogo: string; key: string }[];
+}
+
+export default function Home({ slides, sponsors }: HomeProps) {
   return (
     <>
       <Head>
         <title>Home | Lepoli</title>
       </Head>
 
-      <MainSwiper />
+      <MainSwiper slidesData={slides} />
 
       <Flex
         flexDir="column"
@@ -34,9 +61,37 @@ export default function Home() {
       >
         <MainPresentation />
         <MainProjects />
-        <MainSponsors />
+        <MainSponsors sponsors={sponsors} />
         <MainContactForm />
       </Flex>
     </>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const prismic = getPrismicClient();
+  const response = await prismic.query([
+    Prismic.Predicates.at("document.type", "maincontent"),
+  ]);
+  const data = response.results[0].data;
+
+  const slides: SlidesFormatted = data.swiperimages.map((slide: Slide) => {
+    return {
+      image: slide.slide.url,
+      title: slide.slidetitle[0].text,
+      description: slide.slidedescription[0].text,
+      key: slide.slidekey,
+    };
+  });
+
+  const sponsors = data.sponsors.map((sponsor: Sponsor) => {
+    return {
+      sponsorLogo: sponsor.sponsor.url,
+      key: sponsor.sponsorkey,
+    };
+  });
+
+  return {
+    props: { slides, sponsors },
+  };
+};

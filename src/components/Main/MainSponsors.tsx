@@ -7,7 +7,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-export function MainSponsors() {
+interface MainSponsorsProps {
+  sponsors: { sponsorLogo: string; key: string }[];
+}
+
+export function MainSponsors({ sponsors }: MainSponsorsProps) {
   return (
     <Flex
       maxW="1080px"
@@ -37,21 +41,13 @@ export function MainSponsors() {
       </Flex>
 
       <SimpleGrid gap="5rem" columns={4} align="center" justify="center">
-        <Center>
-          <Image src="/img/logoTalent.svg" alt="logo-talent" />
-        </Center>
-        <Center>
-          <Image
-            src="/img/logoFundacaoEstudar.svg"
-            alt="logo-fundacao-estudar"
-          />
-        </Center>
-        <Center>
-          <Image src="/img/logoBTC.svg" alt="logo-BTC" />
-        </Center>
-        <Center>
-          <Image src="/img/logoCodecraft.svg" alt="logo-codecraft" />
-        </Center>
+        {sponsors.map((sponsor) => {
+          return (
+            <Center key={sponsor.key}>
+              <Image src={sponsor.sponsorLogo} alt={`logo-${sponsor.key}`} />
+            </Center>
+          );
+        })}
       </SimpleGrid>
     </Flex>
   );

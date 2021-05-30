@@ -22,10 +22,10 @@ export function MainProjects() {
       </Flex>
 
       <Flex maxW="1080px" mx="auto" align="center" justify="center">
-        <SimpleGrid gap="5rem" columns={[1,3]} mb="4rem">
+        <SimpleGrid gap="5rem" columns={[1, 3]} mb="4rem">
           <Box
             bg="gray.50"
-            h="300px"
+            h="330px"
             w="300px"
             mx="auto"
             boxShadow="2xl"
@@ -49,7 +49,7 @@ export function MainProjects() {
           </Box>
           <Box
             bg="gray.50"
-            h="300px"
+            h="330px"
             w="300px"
             mx="auto"
             boxShadow="2xl"
@@ -73,7 +73,7 @@ export function MainProjects() {
           </Box>
           <Box
             bg="gray.50"
-            h="300px"
+            h="330px"
             w="300px"
             mx="auto"
             boxShadow="2xl"
