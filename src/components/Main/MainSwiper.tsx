@@ -60,7 +60,13 @@ export function MainSwiper({ slidesData }: MainSwiperProps) {
   );
 
   return (
-    <Flex maxWidth="full" height="300px" mx="auto">
+    <Flex
+      maxWidth="full"
+      height="300px"
+      mx="auto"
+      borderBottomWidth="10px"
+      borderColor="yellow.500"
+    >
       <Swiper
         id="main"
         navigation={{ nextEl: null, prevEl: null }}

@@ -93,5 +93,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: { slides, sponsors },
+    revalidate: 30 * 60, // 30 minutes
   };
 };
