@@ -4,7 +4,6 @@ import {
   Heading,
   HStack,
   Icon,
-  Image,
   Link,
   SimpleGrid,
   Text,
