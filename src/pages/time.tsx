@@ -1,25 +1,10 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Icon,
-  Image,
-  Link,
-  SimpleGrid,
-  Text,
-} from "@chakra-ui/react";
+import { Flex, Heading, Image, Text } from "@chakra-ui/react";
 import { GetStaticProps } from "next";
 import { getPrismicClient } from "../services/prismic";
 import Prismic from "@prismicio/client";
-import { FaLinkedin } from "react-icons/fa";
-
-interface PrismicMember {
-  memberphoto: { url: string };
-  membername: { text: string }[];
-  memberdescription: { text: string }[];
-  linkedin: { url: string };
-}
+import Head from "next/head";
+import { TeamSection } from "../components/Team/TeamSection";
+import { PrismicTeamResponseFormatter } from "../formatters/PrismicTeamResponseFormatter";
 
 interface Member {
   photo: string;
@@ -29,13 +14,27 @@ interface Member {
 }
 
 interface TimeProps {
-  presidencia: Member;
-  diretoria: Member[];
+  presidency: Member[];
+  direction: Member[];
+  acceleration: Member[];
+  humamResources: Member[];
+  comunication: Member[];
+  events: Member[];
 }
 
-export default function Time({ presidencia, diretoria }: TimeProps) {
+export default function Time({
+  presidency,
+  direction,
+  acceleration,
+  humamResources,
+  comunication,
+  events,
+}: TimeProps) {
   return (
     <>
+      <Head>
+        <title>Time | Lepoli</title>
+      </Head>
       <Flex flexDir="column" h="300px" w="100%" pos="relative">
         <Image
           src="/img/inovalab.jpg"
@@ -78,129 +77,17 @@ export default function Time({ presidencia, diretoria }: TimeProps) {
         </Text>
       </Flex>
 
-      <Flex
-        maxW="1080px"
-        mx="auto"
-        flexDir="column"
-        my="5rem"
-        align="center"
-        justify="center"
-      >
-        <Heading
-          alignSelf="self-start"
-          borderBottom="2px"
-          borderColor="yellow.500"
-          mb='2rem'
-        >
-          Presidência
-        </Heading>
-        <Box
-          w="250px"
-          h="auto"
-          align="center"
-          overflow="hidden"
-          boxShadow="2xl"
-        >
-          <Image
-            src={presidencia.photo}
-            w="100%"
-            h="70%"
-            alt="member-photo"
-            objectFit="cover"
-            borderRadius="5px 5px 0 0"
-          />
-          <Flex
-            flexDir="column"
-            h="30%"
-            p="1rem"
-            borderWidth="0 1px 1px 1px"
-            borderRadius="0 0 5px 5px"
-            borderColor="yellow.600"
-          >
-            <Heading fontSize="1xl" mb="0.25rem" alignSelf="self-start">
-              {presidencia.name}
-            </Heading>
+      <TeamSection
+        teamSectionName="Presidência"
+        teamSectionData={presidency}
+        gridColumns={1}
+      />
 
-            <Text fontSize="sm" mb="0.5rem" alignSelf="self-start">
-              {presidencia.description}
-            </Text>
-
-            <Flex justify="space-between" align="center">
-              <Button size="xs" variant="outline" colorScheme="blue">
-                Saiba mais...
-              </Button>
-              <Link href={presidencia.linkedin} isExternal>
-                <Icon as={FaLinkedin} fontSize="1.5rem" />
-              </Link>
-            </Flex>
-          </Flex>
-        </Box>
-      </Flex>
-
-      <Flex
-        maxW="1080px"
-        mx="auto"
-        flexDir="column"
-        my="5rem"
-        align="center"
-        justify="center"
-      >
-        <Heading
-          alignSelf="self-start"
-          borderBottom="2px"
-          borderColor="yellow.500"
-          mb='2rem'
-        >
-          Diretoria
-        </Heading>
-        <SimpleGrid gap="1.5rem" columns={4}>
-          {diretoria.map((member) => {
-            return (
-              <Box
-                w="250px"
-                h="auto"
-                align="center"
-                overflow="hidden"
-                boxShadow="2xl"
-              >
-                <Image
-                  src={member.photo}
-                  w="100%"
-                  h="70%"
-                  alt="member-photo"
-                  objectFit="cover"
-                  borderRadius="5px 5px 0 0"
-                />
-                <Flex
-                  flexDir="column"
-                  h="30%"
-                  p="1rem"
-                  borderWidth="0 1px 1px 1px"
-                  borderRadius="0 0 5px 5px"
-                  borderColor="yellow.600"
-                >
-                  <Heading fontSize="1xl" mb="0.25rem" alignSelf="self-start">
-                    {member.name}
-                  </Heading>
-
-                  <Text fontSize="sm" mb="0.5rem" alignSelf="self-start">
-                    {member.description}
-                  </Text>
-
-                  <Flex justify="space-between" align="center">
-                    <Button size="xs" variant="outline" colorScheme="blue">
-                      Saiba mais...
-                    </Button>
-                    <Link href={member.linkedin} isExternal>
-                      <Icon as={FaLinkedin} fontSize="1.5rem" />
-                    </Link>
-                  </Flex>
-                </Flex>
-              </Box>
-            );
-          })}
-        </SimpleGrid>
-      </Flex>
+      <TeamSection
+        teamSectionName="Diretoria"
+        teamSectionData={direction}
+        gridColumns={4}
+      />
     </>
   );
 }
@@ -213,23 +100,24 @@ export const getStaticProps: GetStaticProps = async () => {
   const data = response.results[0].data;
   //console.log(JSON.stringify(data, null, 2));
 
-  const presidencia: Member = {
-    photo: data.presidencia[0].memberphoto.url,
-    name: data.presidencia[0].membername[0].text,
-    description: data.presidencia[0].memberdescription[0].text,
-    linkedin: data.presidencia[0].linkedin.url,
-  };
-
-  const diretoria = data.diretoria.map((member: PrismicMember) => {
-    return {
-      photo: member.memberphoto.url,
-      name: member.membername[0].text,
-      description: member.memberdescription[0].text,
-      linkedin: member.linkedin.url,
-    };
-  });
+  const {
+    presidency,
+    direction,
+    acceleration,
+    humamResources,
+    comunication,
+    events,
+  } = PrismicTeamResponseFormatter(data);
 
   return {
-    props: { presidencia, diretoria },
+    props: {
+      presidency,
+      direction,
+      acceleration,
+      humamResources,
+      comunication,
+      events,
+    },
+    revalidate: 30 * 60,
   };
 };

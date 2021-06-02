@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Flex,
   Heading,
   HStack,
@@ -65,10 +66,23 @@ export function Footer() {
               <Heading fontSize="lg" mb="1rem" borderBottom="1px">
                 Contato
               </Heading>
-              <Text fontSize="sm" lineHeight="1.5rem" mb="1rem">
+              <Button
+                type="button"
+                justifyContent="flex-start"
+                variant="ghost"
+                _hover={{ textDecoration: "none" }}
+                w="fit-content"
+                fontSize="sm"
+                lineHeight="1.5rem"
+                mb="1rem"
+                px="0"
+                onClick={() => {
+                  window.open("mailto:lepoliusp@gmail.com");
+                }}
+              >
                 <Icon as={FiMail} fontSize="lg" mr="0.5rem" />
                 lepoliusp@gmail.com
-              </Text>
+              </Button>
               <HStack spacing="0.5rem">
                 <Link
                   href="https://www.instagram.com/lepoliusp/?hl=pt-br"
@@ -90,7 +104,7 @@ export function Footer() {
           </HStack>
         </Flex>
       </Flex>
-      <Text color="white" mb='2rem'>
+      <Text color="white" mb="2rem">
         Liga de Empreendedorismo da POLI | Todos os direitos reservados |
         Desenvolvido por LEPOLI-USP
       </Text>
