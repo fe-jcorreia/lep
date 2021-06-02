@@ -88,6 +88,30 @@ export default function Time({
         teamSectionData={direction}
         gridColumns={4}
       />
+
+      <TeamSection
+        teamSectionName="Aceleração"
+        teamSectionData={acceleration}
+        gridColumns={4}
+      />
+
+      <TeamSection
+        teamSectionName="Comunicação"
+        teamSectionData={comunication}
+        gridColumns={4}
+      />
+
+      <TeamSection
+        teamSectionName="Eventos"
+        teamSectionData={events}
+        gridColumns={4}
+      />
+
+      <TeamSection
+        teamSectionName="Gente e Gestão"
+        teamSectionData={humamResources}
+        gridColumns={4}
+      />
     </>
   );
 }
